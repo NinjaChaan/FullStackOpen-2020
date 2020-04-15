@@ -29,9 +29,6 @@ const App = () => {
         } else {
             addPerson()
         }
-
-        setNewName('')
-        setNewNumber('')
     }
 
     const addPerson = () => {
@@ -40,10 +37,19 @@ const App = () => {
             number: newNumber
         }
 
-        personService.create(personObject).then(data => {
-            setPersons(persons.concat(data))
-            createNotification(`Added ${newName}`, 'success')
-        })
+        personService
+            .create(personObject)
+            .then(data => {
+                setPersons(persons.concat(data))
+                createNotification(`Added ${newName}`, 'success')
+
+                setNewName('')
+                setNewNumber('')
+            })
+            .catch(error => {
+                console.log(error.response)
+                createNotification(error.response.data.error, 'error')
+            })
     }
 
     const updatePerson = (person) => {
@@ -62,10 +68,14 @@ const App = () => {
                         : p
                     ))
                     createNotification(`${person.name} updated`, 'success')
+
+                    setNewName('')
+                    setNewNumber('')
                 })
                 .catch(error => {
-                    createNotification(`Information of ${person.name} has already been removed from the server`, 'error')
-                    setPersons(persons.filter(p => p.id !== person.id))
+                    console.log("rrrrr")
+                    createNotification(error.response.data.error, 'error')
+                    setPersons(persons)
                 })
         }
     }
@@ -76,12 +86,15 @@ const App = () => {
         if (confirmed) {
             personService.remove(person.id).then(() => {
                 setPersons(persons.filter(p => p.id !== person.id))
-                createNotification(`${person.name} deleted`, 'success')
+                createNotification(notificationMessage.length, `${person.name} deleted`, 'success')
+
+                setNewName('')
+                setNewNumber('')
             })
-            .catch(error => {
-                createNotification(`Information of ${person.name} has already been removed from the server`, 'error')
-                setPersons(persons.filter(p => p.id !== person.id))
-            })
+                .catch(error => {
+                    createNotification(`Information of ${person.name} has already been removed from the server`, 'error')
+                    setPersons(persons.filter(p => p.id !== person.id))
+                })
         }
     }
 
@@ -108,6 +121,7 @@ const App = () => {
         setNotificationMessage(message)
         setNotificationType(type)
         setTimeout(() => {
+
             setNotificationMessage(null)
             setNotificationType(null)
         }, 5000)
