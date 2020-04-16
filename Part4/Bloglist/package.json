@@ -1,0 +1,38 @@
+{
+	"name": "blocklist",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint .",
+		"lintfix": "eslint --fix ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SleepyNinjaChan/FullStackOpen-2020.git"
+	},
+	"author": "Ninja",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/SleepyNinjaChan/FullStackOpen-2020/issues"
+	},
+	"homepage": "https://github.com/SleepyNinjaChan/FullStackOpen-2020#readme",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"mongoose": "^5.9.9"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb": "^18.1.0",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-jsx-a11y": "^6.2.3",
+		"eslint-plugin-react": "^7.19.0",
+		"eslint-plugin-react-hooks": "^2.5.0",
+		"nodemon": "^2.0.3"
+	}
+}

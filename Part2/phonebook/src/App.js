@@ -13,11 +13,12 @@ const App = () => {
     const [notificationMessage, setNotificationMessage] = useState(null)
     const [notificationType, setNotificationType] = useState(null)
 
-    useEffect(() => {
+    const getAllHook = () => {
         personService.getAll().then(response => {
             setPersons(response)
         })
-    }, [])
+    }
+    useEffect(getAllHook, [])
 
     const handlePersonForm = (event) => {
         event.preventDefault()
@@ -41,7 +42,7 @@ const App = () => {
             .create(personObject)
             .then(data => {
                 setPersons(persons.concat(data))
-                createNotification(`Added ${newName}`, 'success')
+                createNotification(`${newName} added`, 'success')
 
                 setNewName('')
                 setNewNumber('')
@@ -73,9 +74,10 @@ const App = () => {
                     setNewNumber('')
                 })
                 .catch(error => {
-                    console.log("rrrrr")
-                    createNotification(error.response.data.error, 'error')
+                    console.log(error.response)
+                    getAllHook()
                     setPersons(persons)
+                    createNotification(error.response.data.error, 'error')
                 })
         }
     }
@@ -84,16 +86,17 @@ const App = () => {
         const confirmed = window.confirm(`Delete ${person.name} ?`)
 
         if (confirmed) {
-            personService.remove(person.id).then(() => {
-                setPersons(persons.filter(p => p.id !== person.id))
-                createNotification(notificationMessage.length, `${person.name} deleted`, 'success')
-
-                setNewName('')
-                setNewNumber('')
-            })
-                .catch(error => {
-                    createNotification(`Information of ${person.name} has already been removed from the server`, 'error')
+            personService.remove(person.id)
+                .then(() => {
                     setPersons(persons.filter(p => p.id !== person.id))
+                    createNotification(`${person.name} deleted`, 'success')
+
+                    setNewName('')
+                    setNewNumber('')
+                })
+                .catch(error => {
+                    setPersons(persons.filter(p => p.id !== person.id))
+                    createNotification(error.response.data, 'error')
                 })
         }
     }
