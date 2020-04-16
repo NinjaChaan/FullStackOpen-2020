@@ -26,7 +26,7 @@ module.exports = {
 		"no-underscore-dangle": 0,
         "quotes": [
             "error",
-            "double"
+            "single"
         ],
         "semi": [
             "error",
@@ -36,6 +36,8 @@ module.exports = {
         'arrow-spacing': [
             'error', { 'before': true, 'after': true }
         ],
-        'no-console': 0
+		'no-console': 0,
+		'comma-dangle': 0,
+		'prefer-destructuring': 0
     }
 }
