@@ -15,8 +15,13 @@ const create = (title, author, url, user) => {
   return request.then(response => response).catch((error) => (error.response))
 }
 
+const remove = (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  return request.then(response => response).catch((error) => (error.response))
+}
+
 const like = (id, newLikes) => {
   const request = axios.put(`${baseUrl}/${id}`, { likes: newLikes })
   return request.then(response => response).catch((error) => (error.response))
 }
-export default { getAll, create, like }
+export default { getAll, create, like, remove }

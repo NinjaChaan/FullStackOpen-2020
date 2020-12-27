@@ -29,43 +29,78 @@ const App = () => {
     setLoggedIn(false)
   }
 
-  const updateBlog = (newBlog) => {
-    setBlogs(blogs.map((x) => {
-      if (x.id === newBlog.id) {
-        return newBlog
-      } else {
-        return x
-      }
-    }))
+  const onLikeBlog = (blog) => {
+    blogService.like(blog.id, blog.likes + 1).then((response) => {
+      console.log(response)
+      const newBlog = response.data
+      setBlogs(blogs.map((x) => {
+        if (x.id === newBlog.id) {
+          return {
+            ...x,
+            likes: newBlog.likes
+          }
+        } else {
+          return x
+        }
+      }))
+    })
   }
-  
+
+  const onRemoveBlog = (blog) => {
+    blogService.remove(blog.id).then((response) => {
+      console.log(response)
+      setBlogs(blogs.filter((item) => item.id !== blog.id))
+    })
+  }
+
+  const onCreateBlog = (title, author, url) => {
+    blogService.create(title, author, url, user).then(response => {
+      console.log(response)
+      if (response.status === 201) {
+        setMessage(`a new blog ${title} by ${author} added`)
+      } else {
+        setMessage(response.status)
+      }
+    }
+    )
+    setBlogFormVisible(false)
+    setTimeout(() => {
+      blogService.getAll().then(blogs =>
+        setBlogs(blogs)
+      )
+    }, 1000)
+    setTimeout(() => {
+      setMessage('')
+    }, 5000)
+  }
+
   return (
     <div>
       {!loggedIn ? (
         <Login setLoggedIn={setLoggedIn} setName={setName} setUser={setUser} />
       ) : (
-        <div>
-          <h2>blogs</h2>
-          {message !== '' && (
-            <div>
-              <span>{message}</span>
-              <br />
-              <br />
-            </div>
-          )}
-          <span>{name} logged in</span>
-          <button onClick={logout}>logout</button>
-          <br />
-          <br />
-          <button onClick={() => setBlogFormVisible(true)}>new note</button>
-          {blogs && blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
-          )}
-          {blogFormVisible && (
-            <BlogForm setBlogFormVisible={setBlogFormVisible} setMessage={setMessage} setBlogs={setBlogs} user={user} />
-          )}
-        </div>
-      )}
+          <div>
+            <h2>blogs</h2>
+            {message !== '' && (
+              <div>
+                <span>{message}</span>
+                <br />
+                <br />
+              </div>
+            )}
+            <span>{name} logged in</span>
+            <button onClick={logout}>logout</button>
+            <br />
+            <br />
+            <button onClick={() => setBlogFormVisible(true)}>new blog</button>
+            {blogs && blogs.sort((a, b) => a.likes < b.likes ? 1 : -1).map(blog =>
+              <Blog key={blog.id} blog={blog} onLikeBlog={onLikeBlog} onRemoveBlog={onRemoveBlog} />
+            )}
+            {blogFormVisible && (
+              <BlogForm onCreateBlog={onCreateBlog} setBlogFormVisible={setBlogFormVisible} />
+            )}
+          </div>
+        )}
 
     </div>
   )

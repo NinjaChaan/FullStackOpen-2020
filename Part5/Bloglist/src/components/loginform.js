@@ -19,7 +19,7 @@ const Login = ({ setLoggedIn, setName, setUser }) => {
         setUser(response.data.token)
         window.localStorage.setItem('name', response.data.name)
         window.localStorage.setItem('user', response.data.token)
-      }else{
+      } else {
         setMessage(response.data.error)
       }
       setTimeout(() => {
@@ -36,18 +36,20 @@ const Login = ({ setLoggedIn, setName, setUser }) => {
       <br />
       <span>username</span>
       <input
+        id="username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}>
       </input>
       <br />
       <span>password</span>
       <input
+        id="password"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}>
       </input>
       <br />
-      <button onClick={login}>login</button>
+      <button id="login" onClick={login}>login</button>
     </form >
   )
 }
