@@ -1,0 +1,36 @@
+{
+  "notes": [
+    {
+      "content": "custom-hookit aivan mahtavia",
+      "id": 1
+    },
+    {
+      "content": "paras feature ikinä <3",
+      "id": 2
+    },
+    {
+      "content": "foxi is the best foxi",
+      "id": 3
+    },
+    {
+      "content": "foxi is the best foxi",
+      "id": 4
+    },
+    {
+      "content": "foxi is the best foxi",
+      "id": 5
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "foxi",
+      "number": "1",
+      "id": 2
+    }
+  ]
+}

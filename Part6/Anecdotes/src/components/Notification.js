@@ -16,7 +16,7 @@ const Notification = () => {
 	useEffect(() => {
 		const myTimeout = setTimeout(() => {
 			dispatch(clearNotification())
-		}, time * 1000);
+		}, time * 1000)
 		return () => {
 			clearTimeout(myTimeout)
 		}
