@@ -54,6 +54,8 @@ blogsRouter.delete('/:id', async (request, response) => {
 blogsRouter.put('/:id', async (request, response) => {
 	const body = request.body
 
+	console.log(body)
+
 	if (!body.likes) {
 		response.status(400).end()
 		return
@@ -61,7 +63,7 @@ blogsRouter.put('/:id', async (request, response) => {
 
 	const updatedBlog = await Blog.findByIdAndUpdate(
 		request.params.id,
-		{ $set: { likes: body.likes } },
+		{ $set: { likes: body.likes, comments: body.comments } },
 		{ new: true }
 	)
 

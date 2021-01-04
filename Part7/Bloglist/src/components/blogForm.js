@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { createBlog } from '../reducers/blogReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNotification } from '../reducers/notificationReducer'
+import {Button, TextField} from './Styles'
 
 const BlogForm = ({ setBlogFormVisible }) => {
   const [title, setTitle] = useState('')
@@ -24,29 +25,29 @@ const BlogForm = ({ setBlogFormVisible }) => {
       <h2>create new</h2>
       <form onSubmit={create}>
         <span>title:</span>
-        <input
+        <TextField
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}>
-        </input>
+        </TextField>
         <br />
         <span>author:</span>
-        <input
+        <TextField
           id="author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}>
-        </input>
+        </TextField>
         <br />
         <span>url:</span>
-        <input
+        <TextField
           id="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}>
-        </input>
+        </TextField>
         <br />
-        <button id="create" type={'submit'}>create</button>
+        <Button id="create" type={'submit'}>create</Button>
       </form>
-      <button onClick={() => setBlogFormVisible(false)}>cancel</button>
+      <Button onClick={() => setBlogFormVisible(false)}>cancel</Button>
     </div>
   )
 }

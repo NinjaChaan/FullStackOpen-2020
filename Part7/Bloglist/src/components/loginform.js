@@ -3,6 +3,7 @@ import loginService from '../services/login'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../reducers/userReducer'
 import { createNotification } from '../reducers/notificationReducer'
+import {Button, TextField} from './Styles'
 
 const Login = () => {
 	const [username, setUsername] = useState('')
@@ -29,21 +30,21 @@ const Login = () => {
 		<form onSubmit={login}>
 			<h2>login to application</h2>
 			<span>username</span>
-			<input
+			<TextField
 				id="username"
 				value={username}
 				onChange={(e) => setUsername(e.target.value)}>
-			</input>
+			</TextField>
 			<br />
 			<span>password</span>
-			<input
+			<TextField
 				id="password"
 				type="password"
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}>
-			</input>
+			</TextField>
 			<br />
-			<button id="login" onClick={login}>login</button>
+			<Button id="login" onClick={login}>login</Button>
 		</form >
 	)
 }
